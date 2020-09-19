@@ -23,7 +23,7 @@ connection.once("open", () => {
 });
 
 //Serving Static File
-app.use(express.static("./client/build"));
+app.use(express.static(path.join(__dirname, "client/build")));
 
 //Api Routes
 const userRoute = require("./routes/userRoute");
