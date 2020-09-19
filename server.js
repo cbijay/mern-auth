@@ -35,9 +35,24 @@ app.get("/test", (req, res) => {
   res.send("Test");
 });
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+});
+
 //Capture All 404 errors
-app.use(function (req, res, next) {
-  res.status(404).send("Unable to find the requested resource!");
+app.use((req, res, next) => {
+  const error = new Error("Not found");
+  error.status = 400;
+  next(error);
+});
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message,
+    },
+  });
 });
 
 //Starting server
