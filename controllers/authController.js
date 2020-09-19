@@ -95,24 +95,28 @@ const login = async (req, res) => {
 };
 
 const tokenIsValid = async (req, res) => {
-  //Checks for browser token and store in variable
-  const token = req.header("x-auth-token");
-  if (!token) return res.json(false);
+  try {
+    //Checks for browser token and store in variable
+    const token = req.header("x-auth-token");
+    if (!token) return res.json(false);
 
-  //Verified jwt app token with browser token
-  const verified = await jwt.verify(token, process.env.JWT_SECRET);
-  if (!verified) return res.json(false);
+    //Verified jwt app token with browser token
+    const verified = await jwt.verify(token, process.env.JWT_SECRET);
+    if (!verified) return res.json(false);
 
-  //Find User of verified token by verified id
-  const users = await User.findById(verified.id);
-  if (!users) return res.json(false);
+    //Find User of verified token by verified id
+    const users = await User.findById(verified.id);
+    if (!users) return res.json(false);
 
-  //Output true if user exists
-  res.json(true);
+    //Output true if user exists
+    res.json(true);
+  } catch (err) {
+    res.json({ message: err.message });
+  }
 };
 
 const authUser = (req, res) => {
-  const user = User.findById(req.user);
+  const user = await User.findById(req.user);
 
   res.json({
     fullName: user.fullName,
