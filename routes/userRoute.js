@@ -12,4 +12,8 @@ router.use((req, res) => {
   res.sendFile(path.joing(__dirname, "../client/build/index.html"));
 });
 
+router.use("/test", (req, res) => {
+  res.end("Test");
+});
+
 module.exports = router;
