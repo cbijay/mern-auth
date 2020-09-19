@@ -8,11 +8,11 @@ router.post("/login", authController.login);
 router.post("/tokenIsValid", authController.tokenIsValid);
 router.get("/", authController.authUser);
 
-router.use((req, res) => {
+router.use("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
-router.use("/test", (req, res) => {
+router.get("/test", (req, res) => {
   res.send("Test");
 });
 
