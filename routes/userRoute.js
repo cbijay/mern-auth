@@ -9,7 +9,7 @@ router.post("/login", authController.login);
 router.post("/tokenIsValid", authController.tokenIsValid);
 router.get("/", authController.authUser);
 
-router.get("*", (req, res) => {
+router.use((req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 

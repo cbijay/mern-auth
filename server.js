@@ -31,6 +31,15 @@ const userRoute = require("./routes/userRoute");
 
 app.use("/users", userRoute);
 
+app.get("/test", (req, res) => {
+  res.send("Test");
+});
+
+//Capture All 404 errors
+app.use(function (req, res, next) {
+  res.status(404).send("Unable to find the requested resource!");
+});
+
 //Starting server
 const PORT = process.env.PORT || 5000;
 
