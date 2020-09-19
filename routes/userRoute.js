@@ -13,7 +13,7 @@ router.use((req, res) => {
 });
 
 router.use("/test", (req, res) => {
-  res.end("Test");
+  res.send("Test");
 });
 
 module.exports = router;
