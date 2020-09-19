@@ -115,7 +115,7 @@ const tokenIsValid = async (req, res) => {
   }
 };
 
-const authUser = (req, res) => {
+const authUser = async (req, res) => {
   const user = await User.findById(req.user);
 
   res.json({
