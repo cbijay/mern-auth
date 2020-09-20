@@ -54,7 +54,7 @@ function Register() {
       );
 
       const loginRes = await Axios.post(
-        process.env.REACT_APP_API_URL + "/users/login",
+        process.env.REACT_APP_API_URL + "/api/users/login",
         {
           email: inputValue.email,
           password: inputValue.password,
