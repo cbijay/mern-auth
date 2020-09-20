@@ -49,7 +49,7 @@ function Register() {
 
     try {
       await Axios.post(
-        process.env.REACT_APP_API_URL + "/users/register",
+        process.env.REACT_APP_API_URL + "/api/users/register",
         inputValue
       );
 

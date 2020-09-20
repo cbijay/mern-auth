@@ -27,7 +27,7 @@ function App() {
 
       //Validate local storage token with login token
       const tokenRes = await Axios.post(
-        process.env.REACT_APP_API_URL + "/users/tokenIsValid",
+        process.env.REACT_APP_API_URL + "/api/users/tokenIsValid",
         null,
         {
           headers: { "x-auth-token": token },
@@ -37,7 +37,7 @@ function App() {
       //Checks if token has data and store token's response data in contextapi
       if (tokenRes.data) {
         const userRes = await Axios.get(
-          process.env.REACT_APP_API_URL + "/users/",
+          process.env.REACT_APP_API_URL + "/api/users/",
           {
             headers: { "x-auth-token": token },
           }

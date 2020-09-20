@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, "client/build")));
 //Api Routes
 const userRoute = require("./routes/userRoute");
 
-app.use("/users", userRoute);
+app.use("/api/users", userRoute);
 
 app.get("/test", (req, res) => {
   console.log(process.env.DB_URL);

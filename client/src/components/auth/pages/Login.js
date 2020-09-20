@@ -42,7 +42,7 @@ function Login() {
     e.preventDefault();
     try {
       const loginRes = await Axios.post(
-        process.env.REACT_APP_API_URL + "/users/login",
+        process.env.REACT_APP_API_URL + "/api/users/login",
         inputValue
       );
 
