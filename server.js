@@ -15,6 +15,7 @@ const dbUrl = process.env.DB_URL;
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
   useCreateIndex: true,
 });
 
@@ -32,6 +33,8 @@ const userRoute = require("./routes/userRoute");
 app.use("/users", userRoute);
 
 app.get("/test", (req, res) => {
+  console.log(process.env.DB_URL);
+  //console.log(connection);
   res.send("Test");
 });
 
@@ -41,18 +44,8 @@ app.get("*", (req, res) => {
 
 //Capture All 404 errors
 app.use((req, res, next) => {
-  const error = new Error("Not found");
-  error.status = 400;
-  next(error);
-});
-
-app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  res.json({
-    error: {
-      message: error.message,
-    },
-  });
+  res.status(400);
+  res.send("<h4>404 Not Found</h4>");
 });
 
 //Starting server
