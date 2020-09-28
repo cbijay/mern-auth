@@ -25,22 +25,22 @@ connection.once("open", () => {
 });
 
 //Serving Static File
-//app.use(express.static(path.join(__dirname, "client/build")));
+app.use(express.static(path.join(__dirname, "client/build")));
 
 //Api Routes
 const userRoute = require("./routes/userRoute");
 
 app.use("/api/users", userRoute);
 
-/* app.get("*", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client/build/index.html"));
-}); */
+});
 
 //Capture All 404 errors
-/* app.use((req, res, next) => {
+app.use((req, res, next) => {
   res.status(404);
   res.send("<h4>404 Not Found</h4>");
-}); */
+});
 
 //Starting server
 const PORT = process.env.PORT || 5000;
