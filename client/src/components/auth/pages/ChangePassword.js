@@ -17,7 +17,7 @@ import {
 import Success from "../../message/success";
 import Error from "../../message/Error";
 
-function Register() {
+function ChangePassword(props) {
   const classes = authStyles();
   const history = useHistory();
   const { authUser } = useContext(AppContext);
@@ -29,8 +29,6 @@ function Register() {
   });
 
   const [inputValue, setInputValue] = useState({
-    fullName: "",
-    email: "",
     password: "",
     confirmPassword: "",
   });
@@ -38,35 +36,29 @@ function Register() {
   const [success, setSuccess] = useState();
   const [error, setError] = useState();
 
-  const loginLink = () => {
-    history.push("/");
-  };
-
   const handleChange = (e) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = async (e) => {
+  const handlePassword = async (e) => {
     e.preventDefault();
 
+    const token = props.match.params.token;
+
     try {
-      const user = await Axios.post(
-        process.env.REACT_APP_API_URL + "/api/users/register",
+      const user = await Axios.put(
+        process.env.REACT_APP_API_URL + "/api/users/changePassword/" + token,
         inputValue
       );
 
-      if (user) {
-        setSuccess(
-          "Registration Successful!! Please verify your email to login!!"
-        );
+      console.log(user);
+
+      if (user.data === true) {
+        setSuccess("Password has been changed!!");
         setInputValue({
-          fullName: "",
-          email: "",
           password: "",
           confirmPassword: "",
         });
-
-        console.log(success);
       }
     } catch (err) {
       err.response.data.message && setError(err.response.data.message);
@@ -78,7 +70,7 @@ function Register() {
       <div className={classes.paper}>
         <AuthHeader />
         <Card className={classes.root}>
-          <CardHeader title="Register" className={classes.title} />
+          <CardHeader title="Change Password" className={classes.title} />
           <CardContent className={classes.cardContent}>
             {success && (
               <Success
@@ -89,35 +81,8 @@ function Register() {
             {error && (
               <Error error={error} clearError={() => setError(undefined)} />
             )}
-            <form className={classes.form} onSubmit={handleRegister} noValidate>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    autoComplete="fname"
-                    name="fullName"
-                    required
-                    fullWidth
-                    id="fullName"
-                    label="Full Name"
-                    className={classes.inputField}
-                    autoFocus
-                    value={inputValue.fullName}
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    className={classes.inputField}
-                    autoComplete="email"
-                    value={inputValue.email}
-                    onChange={handleChange}
-                  />
-                </Grid>
+            <form className={classes.form} onSubmit={handlePassword} noValidate>
+              <Grid container spacing={1}>
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -148,15 +113,8 @@ function Register() {
                 </Grid>
               </Grid>
               <Button type="submit" fullWidth className={classes.btnSubmit}>
-                Register
+                Submit
               </Button>
-              <Grid container justify="center">
-                <Grid item>
-                  <Button onClick={loginLink} className={classes.routeLink}>
-                    Already have an account? Log in
-                  </Button>
-                </Grid>
-              </Grid>
             </form>
           </CardContent>
         </Card>
@@ -166,4 +124,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default ChangePassword;

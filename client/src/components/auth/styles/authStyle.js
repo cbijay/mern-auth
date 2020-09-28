@@ -10,13 +10,16 @@ const authStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-  },
+  },  
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: "transparent !important",
     width: "150px",
     height: "auto",
     borderRadius: "0",
+  },
+  root: {
+    width: "100%"
   },
   title: {
     padding: `${theme.spacing(1, 0, 1)} !important`,
@@ -39,6 +42,12 @@ const authStyles = makeStyles((theme) => ({
   },
   routeLink: {
     background: "none !important",
+    textTransform: "capitalize !important",
+    fontWeight: "400 !important",
+
+    "&:hover": {
+      textDecoration: "underline !important",
+    },
   },
 }));
 

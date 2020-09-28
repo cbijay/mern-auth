@@ -5,7 +5,6 @@ import AuthFooter from "../layouts/AuthFooter";
 import authStyles from "../styles/authStyle";
 import Axios from "axios";
 import { AppContext } from "../../../context/AppContext";
-import Error from "../errors/Error";
 import {
   Container,
   Grid,
@@ -15,6 +14,8 @@ import {
   TextField,
   Button,
 } from "@material-ui/core";
+import Success from "../../message/success";
+import Error from "../../message/Error";
 
 function Login() {
   const classes = authStyles();
@@ -22,6 +23,7 @@ function Login() {
 
   const { authUser, setAuthUser } = useContext(AppContext);
   const [inputValue, setInputValue] = useState({ email: "", password: "" });
+  const [success, setSuccess] = useState();
   const [error, setError] = useState();
 
   useEffect(() => {
@@ -32,6 +34,10 @@ function Login() {
 
   const registerLink = () => {
     history.push("register");
+  };
+
+  const forgotPasswordLink = () => {
+    history.push("forgotPassword");
   };
 
   const handleChange = (e) => {
@@ -66,8 +72,14 @@ function Login() {
         <Card className={classes.root}>
           <CardHeader title="Log In" className={classes.title} />
           <CardContent className={classes.cardContent}>
+            {success && (
+              <Success
+                success={success}
+                clearSuccess={() => setSuccess(undefined)}
+              />
+            )}
             {error && (
-              <Error message={error} clearError={() => setError(undefined)} />
+              <Error error={error} clearError={() => setError(undefined)} />
             )}
             <form className={classes.form} onSubmit={handleLogin} noValidate>
               <TextField
@@ -99,10 +111,20 @@ function Login() {
               <Button type="submit" fullWidth className={classes.btnSubmit}>
                 Log In
               </Button>
-              <Grid container className={classes.gridLink}>
-                <Button onClick={registerLink} className={classes.routeLink}>
-                  {"Don't have an account? Sign Up"}
-                </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Button
+                    onClick={forgotPasswordLink}
+                    className={classes.routeLink}
+                  >
+                    {"Forgot Password"}
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button onClick={registerLink} className={classes.routeLink}>
+                    {"Don't have an account? Sign Up"}
+                  </Button>
+                </Grid>
               </Grid>
             </form>
           </CardContent>
